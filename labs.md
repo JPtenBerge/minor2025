@@ -43,10 +43,11 @@ Kies een mooie component library uit om je app mee te stylen en style 'm!
 
 ## Oefening 6: components
 
-- Maak een component om een foto weer te geven:
-  ```razor
-  <Photo Photo="@photo" />
-  ```
+Maak een component om een foto weer te geven:
+
+```razor
+<Photo Photo="@photo" />
+```
 
 ## Oefening 7: comments
 
