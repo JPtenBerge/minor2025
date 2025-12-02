@@ -1,6 +1,7 @@
 using BlazorApp1.Client.Pages;
 using BlazorApp1.Components;
 using BlazorApp1.Dal;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -10,6 +11,8 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddSingleton<IPersonDal, PersonDal>();
+
+builder.Services.AddMudServices();
 
 var app = builder.Build();
 
