@@ -51,24 +51,46 @@ Maak een component om een foto weer te geven:
 
 ## Oefening 7: comments
 
-Voeg een pagina toe om details van een foto te bekijken. Op deze pagina willen we ook comments laten zien bij een foto. Gebruik Blazor WebAssembly om deze comments te renderen.
+Voeg een pagina toe om details van een foto te bekijken. Op deze pagina willen we ook comments laten zien bij een foto en dat men een nieuwe comment kan toevoegen. Gebruik Blazor WebAssembly om deze comments te renderen.
 
 Zoiets in de HTML?
 
 ```html
 <Photo Photo="@photo" />
-<Comments Photo="@photo" />
+<Comments Photo="@photo" @rendermode="InteractiveWebAssembly" />
+@* ^-- heeft op zijn beurt weer <Comment />-componenten *@
+```
+
+Comments mogen in een in-memory lijst, vergelijkbaar met foto's. Zorg ervoor dat de comments geprerenderd worden vanaf de serverkant middels `[PersistentState]`, de client-side DAL hoeft nog niet geimplementeerd te worden.
+
+Implementeer alvast de UI-benodigdheden dat iedere comment ook gewijzigd en verwijderd kan worden op basis van ingestelde parameters:
+
+```razor
+<Comment Comment="@comment" WithEdit="true" WithDelete="false" />
 ```
 
 ## Oefening 8: tijd voor een backend
 
-Maak een backend met endpoints voor CRUD-acties met comments. Controllers/minimal API mag je zelf bepalen.
+Maak een backend met endpoints voor CRUD-acties van comments. Controllers/minimal API mag je zelf bepalen.
 
-## Oefening 8: praten met backend
+- `GetAll()`
+- `Get(int id)`
+- `Add()`
+- `Edit()`
+- `Remove()`
 
+## Oefening 9: praten met backend
 
+Koppel de comment get/add/edit/delete-functionaliteiten aan de in de vorige opdracht gemaakte endpoints:
 
-## Oefening 9: persist state
+- Rechtstreeks met de ingebouwde `HttpClient`
+- Middels een wrapper om `HttpClient` zodat het typesafer, leesbaarder en testbaarder wordt
+- Middels Flurl voor makkelijker HTTP-berichten kunnen customizen, leesbaarder en testbaarder.
 
+## Oefening 10: testing
 
+Gebruik bUnit om je `<Comment ... />` te testen. Test of de editmodus werkt evenals het verwijderen van een comment.
 
+## Oefening 11: authenticatie
+
+Inloggen. Coming soon...
