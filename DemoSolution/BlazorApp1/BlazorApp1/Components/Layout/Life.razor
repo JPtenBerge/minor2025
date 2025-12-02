@@ -1,0 +1,32 @@
+@implements IDisposable
+@rendermode InteractiveServer
+
+<h3>Life</h3>
+
+@code {
+
+    [Parameter] public string Message { get; set; }
+    
+    public Life()
+    {
+        Console.WriteLine($"[life] constructor {Message}");
+    }
+
+    protected override void OnInitialized()
+    {
+        Console.WriteLine($"[life] OnInitialized {Message}");
+    }
+    
+    public void Dispose()
+    {
+        Console.WriteLine("[life] Dispose");
+        
+        // navigator geolocation
+        
+        // indexeddb
+        // bluetooth
+        // camera API
+        // websocket
+    }
+
+}

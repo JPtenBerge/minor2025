@@ -1,0 +1,88 @@
+@using System.Text.Json
+@typeparam T
+
+<MudTextField Immediate="true" @bind-Value="Query" OnKeyUp="HandleKeyUp"/>
+
+@if (Suggestions is not null)
+{
+    <ul>
+
+        @* @foreach (var suggestion in Suggestions) *@
+        @for (var i = 0; i < Suggestions.Count; i++)
+        {
+            var suggestion = Suggestions[i];
+            <li class="@(i == CurrentSuggestionIndex ? "active" : "")">@SuggestionTemplate(suggestion)</li>
+            @* <li>@JsonSerializer.Serialize(suggestion)</li> *@
+        }
+    </ul>
+}
+
+@code {
+    [Parameter] public List<T> Data { get; set; }
+    [Parameter] public RenderFragment<T> SuggestionTemplate { get; set; }
+    [Parameter] public EventCallback<T> OnSelect { get; set; }
+
+    public string Query { get; set; }
+    public List<T> Suggestions { get; set; }
+    public int? CurrentSuggestionIndex { get; set; }
+
+    public void Autocomplete()
+    {
+        Suggestions = [];
+        foreach (var item in Data)
+        {
+            // reflection
+            var props = item.GetType().GetProperties().Where(x => x.PropertyType == typeof(string));
+            foreach (var prop in props)
+            {
+                var value = prop.GetValue(item) as string;
+                if (value.Contains(Query, StringComparison.OrdinalIgnoreCase))
+                {
+                    Suggestions.Add(item);
+                }
+            }
+        }
+    }
+
+    public async Task HandleKeyUp(KeyboardEventArgs args)
+    {
+        if (args.Key == "ArrowDown")
+        {
+            Next();
+        }
+        else if (args.Key == "Enter")
+        {
+            await Select();
+        }
+        else
+        {
+            Autocomplete();
+        }
+    }
+
+    public void Next()
+    {
+        if (CurrentSuggestionIndex.HasValue)
+        {
+            CurrentSuggestionIndex = (CurrentSuggestionIndex + 1) % Suggestions.Count;
+            return;
+        }
+
+        CurrentSuggestionIndex = 0;
+    }
+
+    public async Task Select()
+    {
+        if (!CurrentSuggestionIndex.HasValue) return;
+        
+        var currentSuggestion = Suggestions[CurrentSuggestionIndex.Value];
+        await OnSelect.InvokeAsync(currentSuggestion);
+    }
+
+}
+
+<style>
+    .active {
+        background: lightgoldenrodyellow;
+    }
+</style>

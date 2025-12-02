@@ -1,0 +1,33 @@
+@page "/IntComponents"
+@using BlazorApp1.Dal
+@using BlazorApp1.Entities
+@inject IPersonDal PersonDal
+@rendermode InteractiveServer
+
+<h3>Interactive components</h3>
+
+<Life Message="Hallo"/>
+
+@if (Persons is not null)
+{
+    <Autocompleter T="Person" Data="Persons" OnSelect="HandleSelection" @rendermode="InteractiveServer">
+        <SuggestionTemplate Context="person">
+            @person.Name verwacht een @person.ExpectedScore
+        </SuggestionTemplate>
+    </Autocompleter>
+}
+
+@code {
+    public List<Person>? Persons { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Persons = (await PersonDal.GetPersonsAsync()).ToList();
+    }
+
+    void HandleSelection(Person person)
+    {
+        Console.WriteLine($"Hey er is iets geselecteerd! {person.Name}");
+    }
+
+}
