@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="BlazorApp1/BlazorApp1.Client/BlazorApp1.Client.csproj" />
   <Project Path="BlazorApp1/BlazorApp1/BlazorApp1.csproj" />
+  <Project Path="Demo.Shared/Demo.Shared.csproj" />
   <Project Path="DemoProject/DemoProject.csproj" />
   <Project Path="DemoStandalone/DemoStandalone.csproj" />
 </Solution>

@@ -1,5 +1,6 @@
 using BlazorApp1.Dal;
-using BlazorApp1.Entities;
+using Demo.Shared.Entities;
+using Demo.Shared.Dal;
 using Microsoft.AspNetCore.Components;
 
 namespace BlazorApp1.Components.Pages;

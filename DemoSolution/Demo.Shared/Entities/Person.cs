@@ -1,4 +1,4 @@
-namespace BlazorApp1.Entities;
+namespace Demo.Shared.Entities;
 
 public class Person
 {

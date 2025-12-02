@@ -1,6 +1,7 @@
 using BlazorApp1.Client.Pages;
 using BlazorApp1.Components;
 using BlazorApp1.Dal;
+using Demo.Shared.Dal;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);

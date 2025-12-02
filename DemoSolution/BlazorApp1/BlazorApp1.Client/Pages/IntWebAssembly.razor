@@ -1,17 +1,17 @@
-@page "/IntComponents"
+@page "/IntWebAssembly"
 @using BlazorApp1.Client.Components
-@using Demo.Shared.Entities
 @using Demo.Shared.Dal
+@rendermode InteractiveWebAssembly
 @inject IPersonDal PersonDal
-@rendermode InteractiveServer
 
-<h3>Interactive components</h3>
+<h3>Interactive WebAssembly</h3>
 
-<Life Message="Hallo"/>
+Renderer: @RendererInfo.Name<br/>
+IsInteractive: @RendererInfo.IsInteractive
 
 @if (Persons is not null)
 {
-    <Autocompleter T="Person" Data="Persons" OnSelect="HandleSelection" @rendermode="InteractiveServer">
+    <Autocompleter T="Person" Data="Persons" OnSelect="HandleSelection" @rendermode="InteractiveWebAssembly">
         <SuggestionTemplate Context="person">
             @person.Name verwacht een @person.ExpectedScore
         </SuggestionTemplate>
@@ -19,11 +19,12 @@
 }
 
 @code {
+    [PersistentState]
     public List<Person>? Persons { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Persons = (await PersonDal.GetPersonsAsync()).ToList();
+        Persons ??= (await PersonDal.GetPersonsAsync()).ToList();
     }
 
     void HandleSelection(Person person)

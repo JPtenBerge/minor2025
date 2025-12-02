@@ -1,4 +1,4 @@
-using BlazorApp1.Entities;
+using Demo.Shared.Entities;
 using FluentValidation;
 
 namespace BlazorApp1;

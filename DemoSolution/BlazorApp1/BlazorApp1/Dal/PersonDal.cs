@@ -1,4 +1,5 @@
-using BlazorApp1.Entities;
+using Demo.Shared.Entities;
+using Demo.Shared.Dal;
 
 namespace BlazorApp1.Dal;
 

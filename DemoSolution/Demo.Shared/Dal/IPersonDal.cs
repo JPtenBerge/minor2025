@@ -1,6 +1,6 @@
-using BlazorApp1.Entities;
+using Demo.Shared.Entities;
 
-namespace BlazorApp1.Dal;
+namespace Demo.Shared.Dal;
 
 public interface IPersonDal
 {
