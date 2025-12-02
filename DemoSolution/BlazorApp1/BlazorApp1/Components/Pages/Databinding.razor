@@ -12,11 +12,13 @@
 <div style="display: flex; gap: 5rem;">
     <EditForm Model="NewPerson" OnValidSubmit="AddPerson">
         <FluentValidationValidator/>
-
         <ValidationSummary/>
 
         <ol>
             <li>
+                
+                
+                
                 <label for="input-name">Naam:</label>
                 <InputText @bind-Value="NewPerson.Name" id="input-name"/>
                 <ValidationMessage For="() => NewPerson.Name"/>
