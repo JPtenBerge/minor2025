@@ -23,7 +23,7 @@
     [Parameter] public EventCallback<T> OnSelect { get; set; }
 
     public string Query { get; set; }
-    public List<T> Suggestions { get; set; }
+    public List<T>? Suggestions { get; set; }
     public int? CurrentSuggestionIndex { get; set; }
 
     public void Autocomplete()
