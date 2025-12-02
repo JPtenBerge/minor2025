@@ -5,54 +5,57 @@
 
 <h3>Databinding en form</h3>
 
-<EditForm Model="NewPerson" OnValidSubmit="AddPerson">
-    <FluentValidationValidator />
-    
-    <ValidationSummary />
-    
-    <ol>
-        <li>
-            <label for="input-name">Naam:</label>
-            <InputText @bind-Value="NewPerson.Name" id="input-name"/>
-            <ValidationMessage For="() => NewPerson.Name" />
-        </li>
-        <li>
-            <label for="input-expected-score">Verwachte score:</label>
-            <InputNumber @bind-Value="NewPerson.ExpectedScore" id="input-expected-score"/>
-            <ValidationMessage For="() => NewPerson.ExpectedScore" />
-        </li>
-        <li>
-            <button>Add persoon</button>
-        </li>
-        <li>@JsonSerializer.Serialize(NewPerson)</li>
-    </ol>
-</EditForm>
+<div style="display: flex; gap: 5rem;">
+    <EditForm Model="NewPerson" OnValidSubmit="AddPerson">
+        <FluentValidationValidator/>
 
-@if (Persons is null)
-{
-    // var text = "bla";
-    <text>Geen personen!</text>
-}
-else
-{
-    <table>
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Naam</th>
-            <th>Verwachte toetsscore</th>
-        </tr>
-        </thead>
-        <tbody>
-        @foreach (var person in Persons)
-        {
-            <tr class="@(person.ExpectedScore > 7 ? "hoge-verwachting" : "")"
-                @onclick="() => person.ExpectedScore += 1">
-                <td>@person.Id</td>
-                <td>@person.Name</td>
-                <td>@person.ExpectedScore</td>
+        <ValidationSummary/>
+
+        <ol>
+            <li>
+                <label for="input-name">Naam:</label>
+                <InputText @bind-Value="NewPerson.Name" id="input-name"/>
+                <ValidationMessage For="() => NewPerson.Name"/>
+            </li>
+            <li>
+                <label for="input-expected-score">Verwachte score:</label>
+                <InputNumber @bind-Value="NewPerson.ExpectedScore" id="input-expected-score"/>
+                <ValidationMessage For="() => NewPerson.ExpectedScore"/>
+            </li>
+            <li>
+                <button>Add persoon</button>
+            </li>
+            <li>@JsonSerializer.Serialize(NewPerson)</li>
+        </ol>
+    </EditForm>
+
+    @if (Persons is null)
+    {
+        // var text = "bla";
+        <text>Geen personen!</text>
+    }
+    else
+    {
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Naam</th>
+                <th>Verwachte toetsscore</th>
             </tr>
-        }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+            @foreach (var person in Persons)
+            {
+                <tr class="@(person.ExpectedScore > 7 ? "hoge-verwachting" : "")"
+                    @onclick="() => person.ExpectedScore += 1">
+                    <td>@person.Id</td>
+                    <td>@person.Name</td>
+                    <td>@person.ExpectedScore</td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    }
+
+</div>

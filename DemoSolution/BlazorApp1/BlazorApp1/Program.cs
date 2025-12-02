@@ -1,5 +1,6 @@
 using BlazorApp1.Client.Pages;
 using BlazorApp1.Components;
+using BlazorApp1.Dal;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,6 +8,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
     .AddInteractiveWebAssemblyComponents();
+
+builder.Services.AddSingleton<IPersonDal, PersonDal>();
 
 var app = builder.Build();
 
