@@ -1,0 +1,28 @@
+@page "/Upload"
+@using System.Text
+@rendermode InteractiveServer
+
+<h3>Upload</h3>
+
+Geselecteerde foto:
+
+
+
+@if (ImgBytes is not null)
+{
+    <img src="data:image/png;base64,@ImgBytes">
+}
+
+<InputFile OnChange="HandleChange"/>
+
+@code {
+    public string? ImgBytes { get; set; }
+
+    private async Task HandleChange(InputFileChangeEventArgs e)
+    {
+        using var stream = e.File.OpenReadStream();
+        using var memStream = new MemoryStream();
+        await stream.CopyToAsync(memStream);
+        ImgBytes = Convert.ToBase64String(memStream.ToArray());
+    }
+}
