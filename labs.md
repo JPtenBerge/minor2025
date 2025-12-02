@@ -58,7 +58,7 @@ Zoiets in de HTML?
 ```razor
 <Photo Photo="@photo" />
 <Comments Photo="@photo" @rendermode="InteractiveWebAssembly" />
-<!-- ^-- heeft op zijn beurt weer <Comment />-componenten -->
+@* ^-- heeft op zijn beurt weer <Comment />-componenten *@
 ```
 
 Comments mogen in een in-memory lijst, vergelijkbaar met foto's. Zorg ervoor dat de comments geprerenderd worden vanaf de serverkant middels `[PersistentState]`, de client-side DAL hoeft nog niet geimplementeerd te worden.
