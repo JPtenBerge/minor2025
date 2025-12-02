@@ -25,7 +25,7 @@ Voeg een pagina toe met daarop een formulier om nieuwe foto's toe te voegen.
 
 ## Oefening 3: foto's!!
 
-Neem een file upload-invoerveld op in je formulier.
+Neem een file upload-invoerveld op in je formulier en begin daadwerkelijk foto's te tonen in je app.
 
 ## Oefening 4: dependency injection
 
