@@ -1,5 +1,4 @@
-@using System.Text.Json
-@typeparam T
+@typeparam T where T : class
 
 <MudTextField Immediate="true" @bind-Value="Query" OnKeyUp="HandleKeyUp"/>
 
@@ -18,11 +17,11 @@
 }
 
 @code {
-    [Parameter] public List<T> Data { get; set; }
-    [Parameter] public RenderFragment<T> SuggestionTemplate { get; set; }
+    [Parameter] public List<T> Data { get; set; } = null!;
+    [Parameter] public RenderFragment<T> SuggestionTemplate { get; set; } = null!;
     [Parameter] public EventCallback<T> OnSelect { get; set; }
 
-    public string Query { get; set; }
+    public string Query { get; set; } = string.Empty;
     public List<T>? Suggestions { get; set; }
     public int? CurrentSuggestionIndex { get; set; }
 
@@ -35,7 +34,7 @@
             var props = item.GetType().GetProperties().Where(x => x.PropertyType == typeof(string));
             foreach (var prop in props)
             {
-                var value = prop.GetValue(item) as string;
+                var value = (prop.GetValue(item) as string)!;
                 if (value.Contains(Query, StringComparison.OrdinalIgnoreCase))
                 {
                     Suggestions.Add(item);
@@ -62,6 +61,8 @@
 
     public void Next()
     {
+        if (Suggestions is null) return;
+
         if (CurrentSuggestionIndex.HasValue)
         {
             CurrentSuggestionIndex = (CurrentSuggestionIndex + 1) % Suggestions.Count;
@@ -73,8 +74,8 @@
 
     public async Task Select()
     {
-        if (!CurrentSuggestionIndex.HasValue) return;
-        
+        if (Suggestions is null || !CurrentSuggestionIndex.HasValue) return;
+
         var currentSuggestion = Suggestions[CurrentSuggestionIndex.Value];
         await OnSelect.InvokeAsync(currentSuggestion);
     }
