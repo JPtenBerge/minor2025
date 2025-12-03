@@ -1,0 +1,32 @@
+@page "/Photos"
+@using Insta.Shared.Entities
+<h3>Photos</h3>
+
+@if (AllPhotos is null)
+{
+    <p>Nog geen foto's!</p>
+}
+else
+{
+    <ul>
+        @foreach (var photo in AllPhotos)
+        {
+            <li>
+                (img coming soon)
+                <strong>@photo.Title</strong>
+                <p>@photo.Description</p>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+
+    public List<Photo>? AllPhotos { get; set; } =
+    [
+        new() { Id = 4, Title = "Me at the zoo", Description = "Me, at the zoo", PhotoData = [] },
+        new() { Id = 8, Title = "Cat", Description = "Cat staring", PhotoData = [] },
+        new() { Id = 15, Title = "Raccoon", Description = "Drunk raccoon", PhotoData = [] },
+    ];
+
+}
