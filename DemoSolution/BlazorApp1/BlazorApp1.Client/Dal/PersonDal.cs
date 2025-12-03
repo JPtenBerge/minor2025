@@ -1,17 +1,18 @@
 using Demo.Shared.Dal;
 using Demo.Shared.Entities;
+using Flurl.Http;
 
 namespace BlazorApp1.Client.Dal;
 
 public class PersonDal : IPersonDal
 {
-    public Task<IEnumerable<Person>> GetPersonsAsync()
+    public async Task<IEnumerable<Person>> GetPersonsAsync()
     {
-        throw new NotImplementedException();
+        return await "https://localhost:7027/api/person".GetJsonAsync<IEnumerable<Person>>();
     }
 
-    public Task<Person> AddAsync(Person newPerson)
+    public async Task<Person> AddAsync(Person newPerson)
     {
-        throw new NotImplementedException();
+        return await "https://localhost:7027/api/person".PostJsonAsync(newPerson).ReceiveJson<Person>();
     }
 }

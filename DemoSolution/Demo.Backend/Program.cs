@@ -7,6 +7,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("blazorfrontend", policy =>
+    {
+        policy.WithOrigins("https://localhost:7018").AllowAnyHeader().AllowAnyMethod().AllowCredentials();
+    });
+});
+
 builder.Services.AddTransient<IPersonRepository, PersonInMemoryRepository>();
 
 var app = builder.Build();
@@ -18,6 +26,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("blazorfrontend"); // stuurt allow-access-control header terug
 
 app.MapPersonEndpoints();
 
