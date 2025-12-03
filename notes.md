@@ -139,3 +139,59 @@ Over het algemeen stappenplan om een UI component library door te voeren:
 3. `<link>` `.css`  `.js` importeren  fonts
 4. App.razor/Host.razor  globale componenten  `<Theme />`, `<Modal />`
 5. ready to go: `<MudButton />`
+
+## API testing tools
+
+- `.http`-bestandjes met ingebouwde HTTP Client van je IDE
+- Postman
+  - $$$
+  - UI druk
+  - dark mode duurde lang
+- Insomnia
+  - $$
+- Hoppscotch
+- Bruno
+- VS Code extensies
+  - Thunder client
+  - REST Client - werkt ook met `.http`-bestandjes
+- Yaak (van og maker van Insomnia)
+
+## ASP.NET Core APIs
+
+Maar liefst 2 manieren!
+
+- Controllers
+  - bestaan sinds ASP.NET Core (2016), in ASP.NET Web API 2011
+  - herkenbaar aan vele attributen `[ApiController]` `[HttpGet]` `[HttpPost]`  `[Consumes()]` `[Produces()]`
+  - DI bij constructor - 12 dependencies
+    - `Get()` - gebruikt maar 2 dependencies
+    - `Post()` - gebruikt maar 4 dependencies
+    - `Put()` - gebruikt maar 3 dependencies
+    - `Put()` - gebruikt maar 5 dependencies
+    - `Delete()` - gebruikt maar 3 dependencies
+  - ga je nog steeds het meest tegenkomen op reallife projecten. bestaat het langst en werkt hartstikke prima.
+- Minimal API
+  - in de basis bestaat het sinds .NET 6
+  - sinds .NET 8 `TypedResults`
+  - herkenbaar aan methoden als `.Map...()` `.MapGet()` `.MapPost()`
+  - heeft minder features
+    - geen `ControllerFactory`, ~~geen~~ inmiddels toch wel opt-in validatie, geen action filters
+      - ik wil meestal toch FluentValidation, dus prima geen/opt-in validatie
+    - performance++
+  - DI bij de methode zelf    6 dependencies die dan ook gebruikt worden (anders warning unused variable)
+    - grootste nadeel zit hier wat mij betreft: methodedefinities kunnen lang worden
+  - je mag grotendeels je eigen structuur bedenken
+    - maar hou het consistent aub
+
+## Cross-origin resource sharing
+
+- "1 groot gezeik"
+- via AJAX vanaf domein A een berichtje stuurt naar domein B
+  - domeina.nl domeinb.nl
+  - sub1.domein.nl  sub2.domein.nl
+  - domein.nl:8080  domein.nl:8082
+- eerst even checken of domein B het ok vindt om vanaf A aangesproken te worden
+  - via OPTIONS request bekijkt browser de response metadata
+    - header  Access-Control-Allow-Origin: http://domeina.nl
+- beveiligingsfeature *in de browser*
+  - een console-app checkt niks
