@@ -8,7 +8,7 @@ public class PersonInMemoryRepository : IPersonRepository
     [
         new() { Id = 4, Name = "Cedric backend", ExpectedScore = 5.5m },
         new() { Id = 8, Name = "Luke", ExpectedScore = 6.2m },
-        new() { Id = 15, Name = "Massim", ExpectedScore = 7.9m },
+        new() { Id = 15, Name = "Massin", ExpectedScore = 7.9m },
     ];
 
     public Task<IEnumerable<Person>> GetAllAsync()
