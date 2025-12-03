@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="InstaFail/InstaFail.Client/InstaFail.Client.csproj" />
+  <Project Path="InstaFail/InstaFail/InstaFail.csproj" />
+</Solution>
