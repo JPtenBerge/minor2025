@@ -56,7 +56,7 @@ Voeg een pagina toe om details van een foto te bekijken. Op deze pagina willen w
 Zoiets in de HTML?
 
 ```razor
-<Photo Photo="@photo" />
+<PhotoDetails Photo="@photo" />
 <Comments Photo="@photo" @rendermode="InteractiveWebAssembly" />
 @* ^-- heeft op zijn beurt weer <Comment />-componenten *@
 ```
@@ -66,7 +66,7 @@ Comments mogen in een in-memory lijst, vergelijkbaar met foto's. Zorg ervoor dat
 Implementeer alvast de UI-benodigdheden dat iedere comment ook gewijzigd en verwijderd kan worden op basis van ingestelde parameters:
 
 ```razor
-<Comment Comment="@comment" WithEdit="true" WithDelete="false" />
+<CommentDetails Comment="@comment" WithEdit="true" WithDelete="false" />
 ```
 
 ## Oefening 8: tijd voor een backend
