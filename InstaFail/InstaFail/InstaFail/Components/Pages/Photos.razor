@@ -1,6 +1,7 @@
 @page "/Photos"
 @using Insta.Shared.Entities
 @using InstaFail.Dal
+@inject IPhotoDal PhotoDal
 <h3>Photos</h3>
 
 @if (AllPhotos is null)
@@ -29,7 +30,12 @@ else
 }
 
 @code {
-    public List<Photo>? AllPhotos { get; set; } = PhotoDal.Photos;
+    List<Photo>? AllPhotos { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        AllPhotos = (await PhotoDal.GetAllAsync()).ToList();
+    }
 
 }
 
@@ -42,6 +48,7 @@ else
         margin: 0;
         padding: 0;
     }
+
     li img {
         max-width: 150px;
         max-height: 150px;

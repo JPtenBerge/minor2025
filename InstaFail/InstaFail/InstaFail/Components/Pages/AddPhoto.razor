@@ -2,6 +2,7 @@
 @rendermode InteractiveServer
 @using Insta.Shared.Entities
 @using InstaFail.Dal
+@inject IPhotoDal PhotoDal
 
 <h3>AddPhoto</h3>
 
@@ -28,9 +29,9 @@
 @code {
     public Photo NewPhoto { get; set; } = new();
 
-    void Add()
+    async Task Add()
     {
-        PhotoDal.Photos.Add(NewPhoto);
+        await PhotoDal.AddAsync(NewPhoto);
         NewPhoto = new();
     }
 
