@@ -1,5 +1,6 @@
 @page "/Photos"
 @using Insta.Shared.Entities
+@using InstaFail.Dal
 <h3>Photos</h3>
 
 @if (AllPhotos is null)
@@ -12,7 +13,14 @@ else
         @foreach (var photo in AllPhotos)
         {
             <li>
-                (img coming soon)
+                @if (photo.PhotoData is not null && photo.PhotoData.Length > 0)
+                {
+                    <img src="data:image/png;base64,@Convert.ToBase64String(photo.PhotoData)"/>
+                }
+                else
+                {
+                    <p>(no img)</p>
+                }
                 <strong>@photo.Title</strong>
                 <p>@photo.Description</p>
             </li>
@@ -21,12 +29,22 @@ else
 }
 
 @code {
-
-    public List<Photo>? AllPhotos { get; set; } =
-    [
-        new() { Id = 4, Title = "Me at the zoo", Description = "Me, at the zoo", PhotoData = [] },
-        new() { Id = 8, Title = "Cat", Description = "Cat staring", PhotoData = [] },
-        new() { Id = 15, Title = "Raccoon", Description = "Drunk raccoon", PhotoData = [] },
-    ];
+    public List<Photo>? AllPhotos { get; set; } = PhotoDal.Photos;
 
 }
+
+<style>
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+    li img {
+        max-width: 150px;
+        max-height: 150px;
+        display: block;
+    }
+</style>

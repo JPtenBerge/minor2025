@@ -1,0 +1,45 @@
+@page "/AddPhoto"
+@rendermode InteractiveServer
+@using Insta.Shared.Entities
+@using InstaFail.Dal
+
+<h3>AddPhoto</h3>
+
+<EditForm Model="NewPhoto" OnValidSubmit="Add">
+    <ol>
+        <li>
+            <label for="input-title">Titel:</label>
+            <InputText id="input-title" @bind-Value="NewPhoto.Title"/>
+        </li>
+        <li>
+            <label for="input-description">Beschrijving:</label>
+            <InputText id="input-description" @bind-Value="NewPhoto.Description"/>
+        </li>
+        <li>
+            <label for="input-file">Selecteer je foto:</label>
+            <InputFile id="input-file" OnChange="ProcessFile"/>
+        </li>
+        <li>
+            <button>Voeg toe!</button>
+        </li>
+    </ol>
+</EditForm>
+
+@code {
+    public Photo NewPhoto { get; set; } = new();
+
+    void Add()
+    {
+        PhotoDal.Photos.Add(NewPhoto);
+        NewPhoto = new();
+    }
+
+    async Task ProcessFile(InputFileChangeEventArgs e)
+    {
+        await using var stream = e.File.OpenReadStream();
+        using var memStream = new MemoryStream();
+        await stream.CopyToAsync(memStream);
+        NewPhoto.PhotoData = memStream.ToArray();
+    }
+
+}
