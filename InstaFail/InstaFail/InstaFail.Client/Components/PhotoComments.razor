@@ -1,0 +1,38 @@
+@using Insta.Shared.Dal
+@using Entities = Insta.Shared.Entities
+@inject ICommentDal CommentDal
+
+<h3 style="font-variant: small-caps;">Nieuwe comment</h3>
+<PhotoComment PhotoId="PhotoId" Mode="PhotoComment.CommentMode.Add"/>
+
+<h3 style="font-variant: small-caps;">Alle comments</h3>
+@if (Comments is not null)
+{
+    <ul>
+        @foreach (var comment in Comments)
+        {
+            <li>
+                <PhotoComment PhotoId="PhotoId" Comment="comment" Mode="PhotoComment.CommentMode.View"/>
+            </li>
+        }
+    </ul>
+}
+
+@code {
+    [Parameter] public int PhotoId { get; set; }
+    [PersistentState] public IEnumerable<Entities.Comment>? Comments { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Comments ??= await CommentDal.GetAllForPhotoAsync(PhotoId);
+    }
+
+}
+
+<style>
+    ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+</style>

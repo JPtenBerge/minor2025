@@ -1,0 +1,13 @@
+<div style="border: 1px solid gray; padding: 0.6rem;">
+    @if (Name is not null)
+    {
+        <strong>Voor: @Name</strong><br/>
+    }
+
+    Renderer: @RendererInfo.Name<br/>
+    Is interactief: @RendererInfo.IsInteractive
+</div>
+
+@code {
+    [Parameter] public string? Name { get; set; }
+}

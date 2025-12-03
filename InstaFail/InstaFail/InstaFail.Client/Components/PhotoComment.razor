@@ -1,0 +1,122 @@
+@using System.Runtime.CompilerServices
+@using Insta.Shared.Dal
+@using Entities = Insta.Shared.Entities
+@inject ICommentDal CommentDal
+@rendermode InteractiveAuto
+
+@if (_mode == CommentMode.View)
+{
+    <strong>@Comment.Author</strong>
+    <p>@Comment.Message</p>
+
+    @if (WithEdit)
+    {
+        <button @onclick="() => _mode = CommentMode.Edit">edit</button>
+    }
+
+    @if (WithDelete)
+    {
+        <button>verwijder</button>
+    }
+}
+
+@if (_mode == CommentMode.Add)
+{
+    if (_added)
+    {
+        <p>Comment toegevoegd!</p>
+    }
+    else
+    {
+        <EditForm Model="ToAddComment" OnSubmit="Add">
+            <ol>
+                <li>
+                    <label for="input-author">Jouw naam?</label>
+                    <InputText @bind-Value="ToAddComment.Author" id="input-author"/>
+                </li>
+                <li>
+                    <label for="input-message">Wat wil je zeggen?</label>
+                    <InputText @bind-Value="ToAddComment.Message" id="input-message"/>
+                </li>
+                <li>
+                    <button>comment!</button>
+                </li>
+            </ol>
+        </EditForm>
+    }
+}
+
+@if (_mode == CommentMode.Edit)
+{
+    <EditForm Model="ToEditComment" OnSubmit="Save">
+        <ol>
+            <li>
+                <label for="input-author">Jouw naam?</label>
+                <InputText @bind-Value="ToEditComment.Author" id="input-author"/>
+            </li>
+            <li>
+                <label for="input-message">Wat wil je zeggen?</label>
+                <InputText @bind-Value="ToEditComment.Message" id="input-message"/>
+            </li>
+            <li>
+                <button>opslaan</button>
+                <button @onclick="() => _mode = CommentMode.View">annuleer</button>
+            </li>
+        </ol>
+    </EditForm>
+}
+
+@code {
+    [Parameter] public Entities.Comment? Comment { get; set; } = null!;
+    [Parameter] public int PhotoId { get; set; }
+    [Parameter] public CommentMode Mode { get; set; }
+    [Parameter] public bool WithEdit { get; set; } = true;
+    [Parameter] public bool WithDelete { get; set; } = true;
+
+    private CommentMode _mode; // parameters als Mode moeten van buiten worden ingesteld, vandaar een eigen private _mode
+
+    private Entities.Comment ToAddComment { get; set; } = new();
+    private bool _added = false;
+    private Entities.Comment ToEditComment { get; set; } = new();
+
+    public enum CommentMode
+    {
+        View,
+        Add,
+        Edit,
+    }
+
+    protected override void OnParametersSet()
+    {
+        _mode = Mode;
+
+        if (Comment is not null)
+        {
+            ToEditComment.Id = Comment.Id;
+            ToEditComment.PhotoId = Comment.PhotoId;
+            ToEditComment.Author = Comment.Author;
+            ToEditComment.Message = Comment.Message;
+        }
+    }
+
+    async Task Add()
+    {
+        // await CommentDal.AddForPhotoAsync(PhotoId, ToAddComment);
+        _added = true;
+    }
+
+    async Task Save()
+    {
+        // await CommentDal.EditAsync(ToEditComment);
+        _mode = CommentMode.View;
+    }
+
+}
+
+<style>
+    ol {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+</style>

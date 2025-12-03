@@ -1,0 +1,32 @@
+@page "/photo/{id:int}"
+@using Insta.Shared.Dal
+@using Insta.Shared.Entities
+@using InstaFail.Client.Components
+@inject IPhotoDal PhotoDal
+
+<h3>Photo</h3>
+
+@if (Photo is not null)
+{
+    <PhotoDetails Photo="Photo"/>
+
+    <PhotoComments PhotoId="Id" @rendermode="InteractiveWebAssembly"/>
+}
+
+@code {
+    [Parameter] public int Id { get; set; }
+    public Photo? Photo { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Photo = await PhotoDal.GetAsync(Id);
+    }
+
+}
+
+<style>
+    img {
+        max-width: 400px;
+        max-height: 400px;
+    }
+</style>

@@ -1,6 +1,8 @@
 @page "/Photos"
+@using Insta.Shared.Dal
 @using Insta.Shared.Entities
-@using InstaFail.Dal
+@using InstaFail.Client.Components
+@using InstaFail.Client.Pages
 @inject IPhotoDal PhotoDal
 <h3>Photos</h3>
 
@@ -14,7 +16,7 @@ else
         @foreach (var photo in AllPhotos)
         {
             <li>
-                <PhotoDetails Photo="photo"/>
+                <PhotoDetails Photo="photo" WithDetailsLink/>
             </li>
         }
     </ul>

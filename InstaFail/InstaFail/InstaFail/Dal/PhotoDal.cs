@@ -1,3 +1,4 @@
+using Insta.Shared.Dal;
 using Insta.Shared.Entities;
 
 namespace InstaFail.Dal;
@@ -14,6 +15,11 @@ public class PhotoDal : IPhotoDal
     public Task<IEnumerable<Photo>> GetAllAsync()
     {
         return Task.FromResult(s_photos.AsEnumerable());
+    }
+
+    public Task<Photo> GetAsync(int id)
+    {
+        return Task.FromResult(s_photos.Single(x => x.Id == id));
     }
 
     public Task<Photo> AddAsync(Photo photo)

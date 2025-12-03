@@ -1,3 +1,4 @@
+using Insta.Shared.Dal;
 using InstaFail.Components;
 using InstaFail.Dal;
 
@@ -8,6 +9,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveWebAssemblyComponents();
 
 builder.Services.AddTransient<IPhotoDal, PhotoDal>();
+builder.Services.AddTransient<ICommentDal, CommentDal>();
 
 var app = builder.Build();
 

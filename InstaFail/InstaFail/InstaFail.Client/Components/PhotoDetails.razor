@@ -10,7 +10,18 @@ else
 }
 <strong>@Photo.Title</strong>
 <p>@Photo.Description</p>
+@if (WithDetailsLink)
+{
+    <a href="/photo/@Photo.Id">view details</a>
+}
 
 @code {
     [Parameter] public Photo Photo { get; set; } = null!;
+    [Parameter] public bool WithDetailsLink { get; set; }
 }
+
+<style>
+    img {
+        display: block;
+    }
+</style>
