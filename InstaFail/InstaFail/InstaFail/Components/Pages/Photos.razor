@@ -14,16 +14,7 @@ else
         @foreach (var photo in AllPhotos)
         {
             <li>
-                @if (photo.PhotoData is not null && photo.PhotoData.Length > 0)
-                {
-                    <img src="data:image/png;base64,@Convert.ToBase64String(photo.PhotoData)"/>
-                }
-                else
-                {
-                    <p>(no img)</p>
-                }
-                <strong>@photo.Title</strong>
-                <p>@photo.Description</p>
+                <PhotoDetails Photo="photo"/>
             </li>
         }
     </ul>

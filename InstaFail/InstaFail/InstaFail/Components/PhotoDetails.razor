@@ -1,0 +1,16 @@
+@using Insta.Shared.Entities
+
+@if (Photo.PhotoData is not null && Photo.PhotoData.Length > 0)
+{
+    <img src="data:image/png;base64,@Convert.ToBase64String(Photo.PhotoData)"/>
+}
+else
+{
+    <p>(no img)</p>
+}
+<strong>@Photo.Title</strong>
+<p>@Photo.Description</p>
+
+@code {
+    [Parameter] public Photo Photo { get; set; } = null!;
+}
