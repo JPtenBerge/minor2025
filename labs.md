@@ -87,9 +87,9 @@ Koppel de comment get/add/edit/delete-functionaliteiten aan de in de vorige opdr
 - Middels een wrapper om `HttpClient` zodat het typesafer, leesbaarder en testbaarder wordt
 - Middels Flurl voor makkelijker HTTP-berichten kunnen customizen, leesbaarder en testbaarder.
 
-## Oefening 10: testing
+## Oefening 10: testing (OVERGESLAGEN WANT AL GEDAAN)
 
-Gebruik bUnit om je `<Comment ... />` te testen. Test of de editmodus werkt evenals het verwijderen van een comment.
+~~Gebruik bUnit om je `<Comment ... />` te testen. Test of de editmodus werkt evenals het verwijderen van een comment.~~
 
 ## Oefening 11: authenticatie
 
