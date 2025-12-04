@@ -1,19 +1,34 @@
+using Auth0.AspNetCore.Authentication;
 using BlazorApp1.Client.Pages;
 using BlazorApp1.Components;
 using BlazorApp1.Dal;
 using Demo.Shared.Dal;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCascadingAuthenticationState(); 
+
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents()
-    .AddInteractiveWebAssemblyComponents();
+    .AddInteractiveWebAssemblyComponents()
+    .AddAuthenticationStateSerialization(opts =>
+    {
+        opts.SerializeAllClaims = true;
+    });
 
 builder.Services.AddSingleton<IPersonDal, PersonDal>();
 
 builder.Services.AddMudServices();
+
+builder.Services
+    .AddAuth0WebAppAuthentication(options => {
+        options.Domain = builder.Configuration["Auth0:Domain"];
+        options.ClientId = builder.Configuration["Auth0:ClientId"];
+    });
 
 var app = builder.Build();
 
@@ -33,6 +48,25 @@ app.UseStatusCodePagesWithReExecute("/not-found", createScopeForStatusCodePages:
 app.UseHttpsRedirection();
 
 app.UseAntiforgery();
+
+app.MapGet("/Account/Login", async (HttpContext httpContext, string returnUrl = "/") =>
+{
+    var authenticationProperties = new LoginAuthenticationPropertiesBuilder()
+        .WithRedirectUri(returnUrl)
+        .Build();
+
+    await httpContext.ChallengeAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+});
+
+app.MapGet("/Account/Logout", async (HttpContext httpContext) =>
+{
+    var authenticationProperties = new LogoutAuthenticationPropertiesBuilder()
+        .WithRedirectUri("/")
+        .Build();
+
+    await httpContext.SignOutAsync(Auth0Constants.AuthenticationScheme, authenticationProperties);
+    await httpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+});
 
 app.MapStaticAssets();
 app.MapRazorComponents<App>()

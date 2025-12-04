@@ -1,13 +1,32 @@
 @page "/IntWebAssembly"
+@using System.Reflection.Metadata
+@using System.Security.Claims
 @using BlazorApp1.Client.Components
 @using Demo.Shared.Dal
+@using Microsoft.AspNetCore.Components.Authorization
 @rendermode InteractiveWebAssembly
 @inject IPersonDal PersonDal
 
 <h3>Interactive WebAssembly</h3>
 
+@if (!string.IsNullOrEmpty(Username))
+{
+    <p>ingelogd als @Username</p>
+
+    <ul>
+        @foreach (var claim in User.Claims)
+        {
+            <li>@claim.Type heeft als value @claim.Value</li>
+        }
+    </ul>
+}
+
+
 Renderer: @RendererInfo.Name<br/>
 IsInteractive: @RendererInfo.IsInteractive
+
+
+
 
 @if (Persons is not null)
 {
@@ -19,11 +38,20 @@ IsInteractive: @RendererInfo.IsInteractive
 }
 
 @code {
-    [PersistentState]
-    public List<Person>? Persons { get; set; }
+    [PersistentState] public List<Person>? Persons { get; set; }
+    [CascadingParameter] private Task<AuthenticationState>? authenticationState { get; set; }
+    public string Username { get; set; } = string.Empty;
+    public ClaimsPrincipal? User { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
+        if (authenticationState is not null)
+        {
+            var state = await authenticationState;
+            User = state?.User;
+            Username = state?.User?.Identity?.Name ?? string.Empty;
+        }
+
         Persons ??= (await PersonDal.GetPersonsAsync()).ToList();
     }
 

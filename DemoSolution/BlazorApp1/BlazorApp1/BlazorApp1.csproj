@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="Auth0.AspNetCore.Authentication" Version="1.5.1" />
         <PackageReference Include="MudBlazor" Version="8.15.0" />
         <ProjectReference Include="..\BlazorApp1.Client\BlazorApp1.Client.csproj"/>
         <PackageReference Include="Blazored.FluentValidation" Version="2.2.0" />
