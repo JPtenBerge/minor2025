@@ -101,13 +101,13 @@
 
     async Task Add()
     {
-        // await CommentDal.AddForPhotoAsync(PhotoId, ToAddComment);
+        await CommentDal.AddForPhotoAsync(PhotoId, ToAddComment);
         _added = true;
     }
 
     async Task Save()
     {
-        // await CommentDal.EditAsync(ToEditComment);
+        await CommentDal.EditAsync(ToEditComment);
         _mode = CommentMode.View;
     }
 
