@@ -93,4 +93,6 @@ Gebruik bUnit om je `<Comment ... />` te testen. Test of de editmodus werkt even
 
 ## Oefening 11: authenticatie
 
-Inloggen. Coming soon...
+Implementeer authenticatie bij de mini-instagram. Bij het uploaden van een foto of plaatsen van een comment, sla op wie dat doet.
+
+Handig: https://auth0.com/blog/auth0-authentication-blazor-web-apps/
